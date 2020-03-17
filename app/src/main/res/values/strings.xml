@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Test-Demo</string>
+    <string name="splash">splash</string>
+    <string name="LoginModule">login</string>
+    <string name="sstar">sstar</string>
+    <string name="button">Button</string>
+    <string name="main">hello</string>
+    <string name="copyright">2020@copyright</string>
+    <string name="user_head_image">user_head_image</string>
+    <string name="username">用户名</string>
+    <string name="username_hint" />
+    <string name="usern_hint">请输入用户名</string>
+    <string name="passwd">密码</string>
+    <string name="passwd_hint">请输入密码</string>
+    <string name="login_button">登录</string>
+    <string name="register_button">注册</string>
+    <string name="register_module">register</string>
+    <string name="test">test</string>
+</resources>

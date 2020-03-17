@@ -1,0 +1,2 @@
+include ':app', ':aspectjrt'
+rootProject.name='Test-Demo'
