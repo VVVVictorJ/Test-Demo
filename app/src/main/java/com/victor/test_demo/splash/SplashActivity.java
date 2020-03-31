@@ -5,7 +5,6 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.Explode;
-import android.transition.Fade;
 import android.view.Window;
 import android.os.Handler;
 import android.view.WindowManager;
@@ -14,7 +13,6 @@ import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.victor.test_demo.MainActivity;
-import com.victor.test_demo.utils.LoginActivity;
 
 import com.victor.test_demo.R;
 

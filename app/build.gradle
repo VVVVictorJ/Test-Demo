@@ -40,6 +40,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation("com.squareup.okhttp3:okhttp:4.4.0")
+    implementation 'com.github.forvv231:EasyNavigation:1.0.3'
     implementation files('libs\\aspectjrt.jar')
     compile 'com.github.cazaea:sweet-alert-dialog:1.0.0'
 }

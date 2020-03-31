@@ -2,15 +2,10 @@ package com.victor.test_demo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.victor.test_demo.aspectj.annotation.LoginFilter;
-import com.victor.test_demo.utils.LoginActivity;
 
 //TODO ：主界面 放 底部导航栏 -2020.3.17
 

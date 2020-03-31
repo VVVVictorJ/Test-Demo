@@ -6,18 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="201dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="482dp"
-        android:text="@string/test"
-        android:onClick="test_if_loaded"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.next.easynavigation.view.EasyNavigationBar
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:Easy_addIconSize="40dp"
+        app:Easy_navigationHeight="60dp"
+        app:Easy_hasPadding="false"
+        app:Easy_navigationBackground="#90ffffff">
+
+    </com.next.easynavigation.view.EasyNavigationBar>
 </androidx.constraintlayout.widget.ConstraintLayout>

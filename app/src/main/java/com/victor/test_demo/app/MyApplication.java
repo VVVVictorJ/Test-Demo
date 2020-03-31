@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.victor.test_demo.aspectj.core.ILogin;
 import com.victor.test_demo.aspectj.core.LoginSDK;
-import com.victor.test_demo.utils.LoginActivity;
+import com.victor.test_demo.utils.modules.LoginActivity;
 import com.victor.test_demo.utils.SharePreference.SharePreferenceUtil;
 
 

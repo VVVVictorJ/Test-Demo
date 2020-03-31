@@ -16,4 +16,6 @@
     <string name="register_button">注册</string>
     <string name="register_module">register</string>
     <string name="test">test</string>
+    <string name="email">邮箱</string>
+    <string name="mail_hint">请输入有效邮箱</string>
 </resources>

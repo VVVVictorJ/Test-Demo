@@ -24,10 +24,10 @@
             android:label="@string/app_name">
         </activity>
         <activity
-            android:name=".utils.LoginActivity"
+            android:name=".utils.modules.LoginActivity"
             android:label="@string/LoginModule">
         </activity>
-        <activity android:name=".utils.RegisterActivity"
+        <activity android:name=".utils.modules.RegisterActivity"
             android:label="@string/LoginModule"/>
     </application>
 
