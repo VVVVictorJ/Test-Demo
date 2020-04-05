@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="195dp"
+        android:layout_height="176dp"
+        android:contentDescription="@string/userprofile"
+        android:src="@mipmap/add_image"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/add_image"
+        tools:srcCompat="@mipmap/add_image" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="355dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="20dp">
+
+                <com.allen.library.SuperTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    app:sDividerLineType="both"
+                    app:sLeftTextString="帐号管理"
+                    app:sRightIconRes="@drawable/arrow_right_red" />
+
+                <com.allen.library.SuperTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    app:sLeftTextString="通知设置"
+                    app:sRightIconRes="@drawable/arrow_right_red" />
+
+                <com.allen.library.SuperTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    app:sLeftTextString="账号与安全"
+                    app:sRightIconRes="@drawable/arrow_right_red"
+
+                    app:sRightTextString="已保护" />
+
+                <com.allen.library.SuperTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    app:sDividerLineType="bottom"
+                    app:sLeftTextString="设置中心"
+                    app:sRightIconRes="@drawable/arrow_right_red" />
+
+                <com.allen.library.SuperTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    app:sDividerLineType="both"
+                    app:sLeftTextString="意见反馈"
+                    app:sRightIconRes="@drawable/arrow_right_red" />
+
+                <com.allen.library.SuperTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    app:sDividerLineType="both"
+                    app:sLeftTextString="关于我们"
+                    app:sRightIconRes="@drawable/arrow_right_red" />
+
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/exit_button_selector"
+        android:text="@string/exit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.186" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".75" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

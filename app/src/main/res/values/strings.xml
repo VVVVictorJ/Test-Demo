@@ -18,4 +18,14 @@
     <string name="test">test</string>
     <string name="email">邮箱</string>
     <string name="mail_hint">请输入有效邮箱</string>
+    <string name="exit">退出登录</string>
+    <string name="userprofile">userprofile</string>
+    <string name="filename">文件名 :</string>
+    <string name="ratio">比率 :</string>
+    <string name="choose">选择</string>
+    <string name="put">提交</string>
+    <string name="hint_file">请选择转换文件</string>
+    <string name="description">略缩图</string>
+    <drawable name="clr_normal">#E53935</drawable>
+    <drawable name="clr_pressed">#B30B33</drawable>
 </resources>
