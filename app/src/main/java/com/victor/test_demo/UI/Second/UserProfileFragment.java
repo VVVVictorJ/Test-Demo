@@ -1,11 +1,14 @@
 package com.victor.test_demo.UI.Second;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.victor.test_demo.R;
 import com.victor.test_demo.UI.BaseFragment;
+import com.victor.test_demo.aspectj.annotation.LoginFilter;
 
 public class UserProfileFragment extends BaseFragment {
     @Override
@@ -18,7 +21,15 @@ public class UserProfileFragment extends BaseFragment {
         super.initView();
         ImageView imageView = findViewById(R.id.imageView1);
         imageView.setImageResource(R.mipmap.find);
-        Glide.with(this).load("http://192.168.3.108/image/1.png").fitCenter().into(imageView);
+        Button button = findViewById(R.id.button3);
+        button.setOnClickListener(new View.OnClickListener() {
+            @LoginFilter()
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        Glide.with(this).load("http://192.168.3.107/image/1.png").fitCenter().into(imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -31,4 +42,6 @@ public class UserProfileFragment extends BaseFragment {
     protected boolean isLazyLoad() {
         return false;
     }
+
+
 }

@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.next.easynavigation.view.EasyNavigationBar;
 import com.victor.test_demo.UI.First.RecyclerViewFragment;
@@ -39,9 +41,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //底部导航栏
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         easyNavigationBar = findViewById(R.id.navigationBar);
         fragments.add(new RecyclerViewFragment());
         fragments.add(new UserProfileFragment());
@@ -55,14 +54,15 @@ public class MainActivity extends AppCompatActivity {
                 .addLayoutRule(EasyNavigationBar.RULE_BOTTOM)
                 .addLayoutBottom(200)
                 .onTabClickListener(new EasyNavigationBar.OnTabClickListener() {
-
+                    @LoginFilter()
                     @Override
                     public boolean onTabClickEvent(View view, int position) {
+                        Log.v("position",String.valueOf(position));
                         if (position == 1){
-                            //TODO 注解
                             Intent intent = new Intent(MainActivity.this, ConvertActivity.class);
                             startActivity(intent);
                             return true;
+                        }else if (position == 2) {
                         }
                         return false;
                     }
