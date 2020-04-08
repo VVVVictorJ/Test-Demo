@@ -1,6 +1,7 @@
 package com.victor.test_demo.aspectj.core;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.victor.test_demo.aspectj.annotation.LoginFilter;
 import com.victor.test_demo.aspectj.expection.AnnotationException;
@@ -8,10 +9,13 @@ import com.victor.test_demo.aspectj.expection.NoInitException;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+
+import java.util.logging.Handler;
 
 /*
 * @description 注入点方法
@@ -47,5 +51,10 @@ public class LoginFilterAspect {
         }else {
             iLogin.login(param,loginFilter.userDefine());//执行跳转至登录界面
         }
+    }
+
+    @After("loginFilter()")
+    public void afterLoginPoint(ProceedingJoinPoint joinPoint)throws Throwable{
+
     }
 }
