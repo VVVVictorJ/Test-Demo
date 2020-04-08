@@ -15,6 +15,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.victor.test_demo.MainActivity;
 
 import com.victor.test_demo.R;
+import com.victor.test_demo.utils.SharePreference.SharePreferenceUtil;
+import com.victor.test_demo.utils.modules.LoginActivity;
 
 import androidx.annotation.Nullable;
 
@@ -51,13 +53,26 @@ public class SplashActivity extends Activity {
         /*
         * handler 线程安全处理
         */
-        new Handler().postDelayed(new Runnable() {          //本质理解是Handler延迟调用线程跳转activity
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());                      //跳转到登录界面
-                SplashActivity.this.finish();               //结束该activity
-            }
-        }, SPLASH_DISPLAY_LENGTH);
+        if (SharePreferenceUtil.getUser(SharePreferenceUtil.USER_NAME,SplashActivity.this)!=""){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent,
+                            ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
+                    SplashActivity.this.finish();
+                }
+            },SPLASH_DISPLAY_LENGTH);
+        }else{
+            new Handler().postDelayed(new Runnable() {          //本质理解是Handler延迟调用线程跳转activity
+                @Override
+                public void run() {
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(intent,
+                            ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());                      //跳转到登录界面
+                    SplashActivity.this.finish();               //结束该activity
+                }
+            }, SPLASH_DISPLAY_LENGTH);
+        }
     }
 }
