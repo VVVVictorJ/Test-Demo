@@ -12,7 +12,7 @@ import sun.misc.BASE64Encoder;
 
 public class base64_module {
     private String IMAGE_URL;
-    static String STORAGE_URL = "/storage/emulated/0/A/";//TODO 改路径
+    static String STORAGE_URL = "/storage/emulated/0/DCIM/";//TODO 改路径
 
     public base64_module() {
 
