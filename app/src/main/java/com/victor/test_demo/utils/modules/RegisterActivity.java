@@ -27,10 +27,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-//TODO 完成界面
 public class RegisterActivity extends Activity {
 
-    static final String REGISTER = "http://127.0.0.1:5000/register";
+    static final String REGISTER = "http://192.168.3.107:5000/register";
     EditText username;
     EditText password;
     EditText email;
@@ -42,19 +41,17 @@ public class RegisterActivity extends Activity {
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         email = findViewById(R.id.email);
-        //TODO 调用注册模块
-        //TODO 注册完成后返回主界面
     }
 
     public void RRegister(View view) throws Exception {
         String susername = username.getText().toString();
         String spassword = password.getText().toString();
         String semail = email.getText().toString();
-        if (susername.equals("")||spassword.equals("")||semail.equals("")){
+        if (susername.equals("") || spassword.equals("") || semail.equals("")) {
             showWarnSweetDialog("任意一项不能为空");
             return;
         }
-        new register_module(REGISTER).run(susername,spassword,semail);
+        new register_module(REGISTER).run(susername, spassword, semail);
     }
 
     /*
@@ -76,12 +73,12 @@ public class RegisterActivity extends Activity {
          * @param passwd 密码
          * @param mail 邮箱
          * */
-        public void run(String name, String passwd, String mail) throws Exception{
+        public void run(String name, String passwd, String mail) throws Exception {
 
-            final RequestBody requestBody =  new FormBody.Builder()
-                    .add("username",name)
-                    .add("password_hash",new encryption(passwd).convert())
-                    .add("email",mail)
+            final RequestBody requestBody = new FormBody.Builder()
+                    .add("username", name)
+                    .add("password_hash", new encryption(passwd).convert())
+                    .add("email", mail)
                     .build();
 
             final Request request = new Request.Builder()
@@ -94,25 +91,42 @@ public class RegisterActivity extends Activity {
             call.enqueue(new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    showWarnSweetDialog("服务器错误");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showWarnSweetDialog("服务器错误");
+                        }
+                    });
                 }
 
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                     final String res = response.body().string();
-                    showSuccessSweetDialog(res);
-                    SharePreferenceUtil.setBooleanSp(SharePreferenceUtil.IS_LOGIN,
-                            false,RegisterActivity.this);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showSuccessSweetDialog(res);
+                            SharePreferenceUtil.setBooleanSp(SharePreferenceUtil.IS_LOGIN,
+                                    true, RegisterActivity.this);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                                    RegisterActivity.this.finish();
+                                }
+                            }, 3000);
+                        }
+                    });
                 }
             });
         }
 
     }
+
     /*
      * @Description Dialog
      * */
-    private void showWarnSweetDialog(String info)
-    {
+    private void showWarnSweetDialog(String info) {
         SweetAlertDialog pDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         pDialog.setTitleText(info);
@@ -123,27 +137,16 @@ public class RegisterActivity extends Activity {
     /*
      * @Description Dialog
      * */
-    private void showSuccessSweetDialog(String info)
-    {
+    private void showSuccessSweetDialog(String info) {
         final SweetAlertDialog pDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.SUCCESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         pDialog.setTitleText(info);
         pDialog.setCancelable(true);
         pDialog.show();
-        pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener()
-        {
+        pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
             @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog)
-            {
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
                 pDialog.dismiss();
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        RegisterActivity.this.finish();
-                    }
-                });
             }
         });
     }
