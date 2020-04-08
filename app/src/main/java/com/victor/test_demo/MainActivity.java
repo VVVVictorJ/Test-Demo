@@ -23,7 +23,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private EasyNavigationBar easyNavigationBar;
 
-    private String[] tabText = {"首页","发布","我的"};
+    private String[] tabText = {"首页", "发布", "我的"};
 
     private int[] normalIcon = {R.mipmap.index, R.mipmap.add_image, R.mipmap.me};
 
@@ -53,27 +53,23 @@ public class MainActivity extends AppCompatActivity {
                 .fragmentManager(getSupportFragmentManager())
                 .addLayoutRule(EasyNavigationBar.RULE_BOTTOM)
                 .addLayoutBottom(200)
-                .onTabClickListener(new EasyNavigationBar.OnTabClickListener() {
-                    @LoginFilter()
-                    @Override
-                    public boolean onTabClickEvent(View view, int position) {
-                        Log.v("position",String.valueOf(position));
-                        if (position == 1){
-                            Intent intent = new Intent(MainActivity.this, ConvertActivity.class);
-                            startActivity(intent);
-                            return true;
-                        }else if (position == 2) {
-                        }
-                        return false;
-                    }
-                })
                 .mode(EasyNavigationBar.MODE_ADD)//突出模式
                 .build();
+        easyNavigationBar.onTabClickListener(new EasyNavigationBar.OnTabClickListener() {
+            @Override
+            public boolean onTabClickEvent(View view, int position) {
+                if (position == 1) {
+                    Intent intent = new Intent(MainActivity.this, ConvertActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @LoginFilter
     public void test_if_loaded(View view) {
-        //TODO 此方法是应用于tab切换上的，若没有登录，
-        // 则跳转至登陆界面，反之跳转至点击tab 2020-3-17 18：18
+
     }
 }
