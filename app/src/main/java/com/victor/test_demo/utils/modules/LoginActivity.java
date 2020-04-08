@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
@@ -172,21 +173,16 @@ public class LoginActivity extends Activity {
         pDialog.setTitleText(info);
         pDialog.setCancelable(true);
         pDialog.show();
-        pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener()
-        {
+        new CountDownTimer(3000,1000){
             @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog)
-            {
-                pDialog.dismiss();
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        LoginActivity.this.finish();
-                    }
-                });
+            public void onTick(long l) {
+
             }
-        });
+
+            @Override
+            public void onFinish() {
+                pDialog.dismiss();//自动销毁，防止内存泄漏
+            }
+        }.start();
     }
 }
