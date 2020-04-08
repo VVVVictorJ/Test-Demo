@@ -76,6 +76,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected void initData() {
     }
+
     //判断是否懒加载
     protected boolean isLazyLoad() {
         return false;
