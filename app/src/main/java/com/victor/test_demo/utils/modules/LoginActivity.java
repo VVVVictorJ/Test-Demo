@@ -17,6 +17,7 @@ import com.victor.test_demo.utils.encrypt.encryption;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.time.chrono.MinguoChronology;
 
 import androidx.annotation.Nullable;
 import okhttp3.Call;
@@ -27,9 +28,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-//TODO ：登录成功 之后跳转到 主界面 -2020.3.16（not tested)
 public class LoginActivity extends Activity {
-    static final String LOGIN = "http://127.0.0.1/login";
+    static final String LOGIN = "http://192.168.3.107:5000/login";
     EditText username;
     EditText password;
     @Override
@@ -47,7 +47,6 @@ public class LoginActivity extends Activity {
         String sUsername = username.getText().toString();
         String sPasswd =password.getText().toString();
 
-        //TODO 调用登录模块 login_module
         if(sUsername.equals("")||sPasswd.equals("")){
             showWarnSweetDialog("账号密码不能为空");
             return;
@@ -117,7 +116,7 @@ public class LoginActivity extends Activity {
                         @Override
                         public void run()
                         {
-                            if (res.equals("0"))                                                    //TODO 服务端还没改
+                            if (res.equals("0"))
                             {
                                 showWarnSweetDialog("无此账号,请先注册");
                             }
@@ -129,7 +128,16 @@ public class LoginActivity extends Activity {
                             {
                                 showSuccessSweetDialog(res);
                                 SharePreferenceUtil.setBooleanSp(SharePreferenceUtil.IS_LOGIN,
-                                        false,LoginActivity.this);
+                                        true,LoginActivity.this);
+                                SharePreferenceUtil.setUser("username",name,
+                                        LoginActivity.this);
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        LoginActivity.this.finish();
+                                    }
+                                },3000);
                             }
 
                         }
