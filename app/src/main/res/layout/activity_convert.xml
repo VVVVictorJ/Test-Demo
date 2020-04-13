@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:text="@string/put"
         android:onClick="upload"
+
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toStartOf="@+id/guideline10"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
