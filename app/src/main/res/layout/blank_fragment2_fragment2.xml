@@ -11,12 +11,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
+        app:layout_constraintGuide_percent="0.3" />
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="195dp"
-        android:layout_height="176dp"
+        android:layout_height="0dp"
         android:contentDescription="@string/userprofile"
         android:src="@mipmap/add_image"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
@@ -127,6 +127,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.80" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
