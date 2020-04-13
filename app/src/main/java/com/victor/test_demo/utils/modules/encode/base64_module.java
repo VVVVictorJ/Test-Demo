@@ -12,7 +12,8 @@ import sun.misc.BASE64Encoder;
 
 public class base64_module {
     private String IMAGE_URL;
-    static String STORAGE_URL = "/storage/emulated/0/DCIM/";//TODO 改路径
+    static String STORAGE_URL = "/storage/emulated/0/DCIM/";
+    //TODO static String Profile_URL
 
     public base64_module() {
 
@@ -37,12 +38,11 @@ public class base64_module {
         return encoder.encode(buffer);
     }
 
-    //TODO 返回byte[] 数组
-    public boolean Decode_To_Image(String Base64, String Type) {
+    public boolean Decode_To_Image(String Base64, String uuid, String Type) {
         BASE64Decoder decoder = new BASE64Decoder();
-        String random_file_name = UUID.randomUUID().toString();
+        //String random_file_name = UUID.randomUUID().toString();
         try {
-            FileOutputStream outputStream = new FileOutputStream(new File(STORAGE_URL + random_file_name + "." + Type));//随机uuid存储解码后的图片
+            FileOutputStream outputStream = new FileOutputStream(new File(STORAGE_URL + uuid + "." + Type));//随机uuid存储解码后的图片
             byte[] decodeBytes = decoder.decodeBuffer(Base64);
             outputStream.write(decodeBytes);
             outputStream.close();
@@ -55,7 +55,7 @@ public class base64_module {
 
     public static void main(String... args) throws Exception {
         String string = new base64_module("C:\\编程\\java\\okhttp-test\\src\\source\\test.PNG").Encode_To_Base64();
-        new base64_module().Decode_To_Image(string, "PNG");
+        //new base64_module().Decode_To_Image(string, "PNG");
 
     }
 }
