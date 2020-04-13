@@ -1,16 +1,24 @@
 package com.victor.test_demo;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
 import com.cazaea.sweetalert.SweetAlertDialog;
 import com.victor.test_demo.utils.SharePreference.SharePreferenceUtil;
 import com.victor.test_demo.utils.modules.LoginActivity;
@@ -21,11 +29,13 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.Call;
@@ -41,11 +51,14 @@ import vip.upya.lib.sfof.SelectFileOrFolderDialog;
 public class ConvertActivity extends AppCompatActivity {
 
     final String ZIP_URL = "http://192.168.3.107:5000/predict/video/";
+    static String STORAGE_URL = "/storage/emulated/0/DCIM/";
+    static String SAVE_URL = "/storage/emulated/0/DCIM/Video/";
     private TextView textView;
     private Spinner spinner;
     private String ratio;
     private Button button;
     boolean b = true;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +83,7 @@ public class ConvertActivity extends AppCompatActivity {
                 ratio = getResources().getStringArray(R.array.ratio)[0];
             }
         });
+        imageView = findViewById(R.id.imageView2);
     }
 
     public void choosefile(View view) {
@@ -82,17 +96,14 @@ public class ConvertActivity extends AppCompatActivity {
                 }).show();
     }
 
-    //TODO 移植zip模块
     public void upload(View view) throws Exception {
         String get = textView.getText().toString();
         if (get.substring(get.length() - 3, get.length()).equals("DNG")) {
             button.setClickable(false);
             new test_dng(get).run();
-            //TODO Gilde 加载略缩图
         } else if (get.substring(get.length() - 3, get.length()).equals("zip")) {
             button.setClickable(false);
             new test__zip(ZIP_URL, get).run();
-            //TODO Gilde 加载略缩图
         } else {
             Toast.makeText(this, "请选中DNG或ZIP文件", Toast.LENGTH_SHORT).show();
             textView.setText("请选择转换文件");
@@ -105,6 +116,7 @@ public class ConvertActivity extends AppCompatActivity {
      * @description DNG图片发送类
      * @author victor
      * @Time 2020/4/7 17-44-49
+     * @format 内部类
      * */
     public class test_dng {
         final String SERVER_URL = "http://192.168.3.107:5000/predict/image/";
@@ -152,15 +164,18 @@ public class ConvertActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                     String tmp = Objects.requireNonNull(response.body()).string();
+                    String random_file_name = UUID.randomUUID().toString();
                     runOnUiThread(new Runnable() {
 
                         @Override
                         public void run() {
-                            if (new base64_module().Decode_To_Image(tmp, "png")) {
+                            // 写入完成后显示通知栏
+                            if (new base64_module().Decode_To_Image(tmp, random_file_name, "png")) {
                                 SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(
                                         ConvertActivity.this, SweetAlertDialog.WARNING_TYPE
                                 );
-                                sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                                sweetAlertDialog.getProgressHelper()
+                                        .setBarColor(Color.parseColor("#A5DC86"));
                                 sweetAlertDialog.setTitleText("完成");
                                 sweetAlertDialog.setCancelable(true);
                                 sweetAlertDialog.show();
@@ -176,6 +191,11 @@ public class ConvertActivity extends AppCompatActivity {
                                     }
                                 }.start();
                                 button.setClickable(true);
+                                //加载略缩图
+                                Glide.with(ConvertActivity.this)
+                                        .load(STORAGE_URL+random_file_name+".png")
+                                        .fitCenter()
+                                        .into(imageView);
                             }
                         }
                     });
@@ -189,6 +209,7 @@ public class ConvertActivity extends AppCompatActivity {
      * @description ZIP发送类
      * @author victor
      * @Time
+     * @format 内部类
      * */
     public class test__zip {
         private String URL ;
@@ -237,10 +258,11 @@ public class ConvertActivity extends AppCompatActivity {
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                     //System.out.println(Objects.requireNonNull(response.body()).string());
                     byte[] tmp = Objects.requireNonNull(response.body()).bytes();
+                    String random_file_name = UUID.randomUUID().toString();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (new writeFile().write(SAVE_URL, tmp)){
+                            if (new writeFile().write(SAVE_URL,random_file_name, tmp)){
                                 SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(
                                         ConvertActivity.this, SweetAlertDialog.WARNING_TYPE
                                 );
@@ -260,6 +282,23 @@ public class ConvertActivity extends AppCompatActivity {
                                     }
                                 }.start();
                                 button.setClickable(true);
+                                //加载视频第一帧
+                                Glide.with(ConvertActivity.this)
+                                        .load(SAVE_URL+random_file_name+".mp4")
+                                        .transform(new BitmapTransformation() {
+                                            @Override
+                                            protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
+                                                return TransformationUtils.rotateImage(Bitmap.createScaledBitmap(
+                                                        toTransform, toTransform.getWidth() / 2,
+                                                        toTransform.getHeight() / 2, false), 90);
+                                            }
+
+                                            @Override
+                                            public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
+
+                                            }
+                                        })
+                                        .into(imageView);
                             }
                         }
                     });
@@ -269,11 +308,9 @@ public class ConvertActivity extends AppCompatActivity {
         }
 
         class writeFile{
-            boolean write(String path, byte[] array){
-                //TODO 完成写入文件模块
-                String random_file_name = UUID.randomUUID().toString();
+            boolean write(String path, String uuid, byte[] array){
                 try {
-                    FileOutputStream outputStream = new FileOutputStream(new File(SAVE_URL+random_file_name+".avi"));
+                    FileOutputStream outputStream = new FileOutputStream(new File(SAVE_URL+uuid+".mp4"));
                     outputStream.write(array);
                     outputStream.close();
                 }catch (IOException e){
