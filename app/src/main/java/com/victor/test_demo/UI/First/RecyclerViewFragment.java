@@ -3,6 +3,7 @@ package com.victor.test_demo.UI.First;
 import android.content.pm.ActivityInfo;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.dueeeke.videocontroller.StandardVideoController;
 import com.dueeeke.videocontroller.component.CompleteView;
@@ -11,6 +12,9 @@ import com.dueeeke.videocontroller.component.GestureView;
 import com.dueeeke.videocontroller.component.TitleView;
 import com.dueeeke.videocontroller.component.VodControlView;
 import com.dueeeke.videoplayer.player.VideoView;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.victor.test_demo.MainActivity;
 import com.victor.test_demo.R;
 import com.victor.test_demo.UI.BaseFragment;
@@ -39,8 +43,7 @@ public class RecyclerViewFragment extends BaseFragment implements OnItemChildCli
     protected ErrorView mErrorView;
     protected CompleteView mCompleteView;
     protected TitleView mTitleView;
-
-
+    protected RefreshLayout refreshLayout;
     /**
      * 当前播放的位置
      */
@@ -62,7 +65,6 @@ public class RecyclerViewFragment extends BaseFragment implements OnItemChildCli
         initVideoView();
         //保存进度
 //        mVideoView.setProgressManager(new ProgressManagerImpl());
-
         mRecyclerView = findViewById(R.id.rv);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -91,6 +93,22 @@ public class RecyclerViewFragment extends BaseFragment implements OnItemChildCli
             @Override
             public void onClick(View v) {
                 mAdapter.addData(DataUtil.getVideoList());
+            }
+        });
+        //刷新机制
+        refreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+                Toast.makeText(getActivity(),"已刷新",Toast.LENGTH_SHORT).show();
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+                Toast.makeText(getActivity(),"无更多",Toast.LENGTH_SHORT).show();
             }
         });
     }
