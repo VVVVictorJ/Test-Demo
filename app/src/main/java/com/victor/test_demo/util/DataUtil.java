@@ -43,6 +43,7 @@ public class DataUtil {
 //    }
 
     public static List<VideoBean> getVideoList() {
+        //可以添加模块动态获取视频链接
         List<VideoBean> videoList = new ArrayList<>();
         videoList.add(new VideoBean("预告片1",
                 "https://cms-bucket.nosdn.127.net/eb411c2810f04ffa8aaafc42052b233820180418095416.jpeg",
