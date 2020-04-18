@@ -1,12 +1,9 @@
 package com.victor.test_demo;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -20,9 +17,8 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
 import com.cazaea.sweetalert.SweetAlertDialog;
-import com.victor.test_demo.utils.SharePreference.SharePreferenceUtil;
-import com.victor.test_demo.utils.modules.LoginActivity;
-import com.victor.test_demo.utils.modules.encode.base64_module;
+import com.victor.test_demo.utils.SharePreferences.SharePreferenceUtil;
+import com.victor.test_demo.utils.module.encode.base64_module;
 
 import org.jetbrains.annotations.NotNull;
 
